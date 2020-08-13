@@ -1,0 +1,16 @@
+
+
+
+export NSUPDATE_SERVER="ns.crc.hs.ntnu.edu.tw"
+export NSUPDATE_KEY="/etc/bind/update.key"
+export NSUPDATE_ZONE="crc.hs.ntnu.edu.tw"
+
+acme.sh --issue -d "crc.hs.ntnu.edu.tw" -d "*.crc.hs.ntnu.edu.tw" \
+	--keylength ec-384 --dns dns_nsupdate \
+	--ocsp --auto-upgrade 1
+
+acme.sh --install-cert -d "crc.hs.ntnu.edu.tw" \
+	--ecc \
+	--key-file       /etc/nginx/ssl/crc.hs.ntnu.edu.tw_key.pem  \
+	--fullchain-file /etc/nginx/ssl/crc.hs.ntnu.edu.tw_cert.pem \
+	--reloadcmd      "service nginx force-reload"
